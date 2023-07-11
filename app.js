@@ -52,14 +52,10 @@ app.post("/upload", upload.single("book"), (req, res) => {
 });
 
 app.get("/", (req, res) => {
-  Image.find().then((err, allImages) => {
-    if (err) {
-      console.log(err);
-    } else {
-      res.render("index", {
-        images: allImages,
-      });
-    }
+  Image.find().then((allImages) => {
+    res.render("index", {
+      images: allImages,
+    });
   });
 });
 
