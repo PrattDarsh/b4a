@@ -51,10 +51,16 @@ app.post("/upload", upload.single("book"), (req, res) => {
   res.send("done");
 });
 
-app.get("/", async (req, res) => {
-  const images = await Image.find().sort({ _id: -1 });
-
-  res.render("index", { images: images });
+app.get("/", (req, res) => {
+  Image.find().then((err, allImages) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.render("index", {
+        images: allImages,
+      });
+    }
+  });
 });
 
 app.listen(process.env.PORT || 3000, (req, res) => {

@@ -73,8 +73,7 @@
 
             <div class="">
                 <% images.forEach((image)=>{ %>
-                    <iframe width="560" height="315"
-                        src="data:<%= image.image.contentType %>;base64,<%= image.image.data.toString('base64') %>" />
+                    <img src="data:<%= image.image.contentType %>;base64,<%= image.image.data.toString('base64') %>" />
 
                     <% }) %>
 
