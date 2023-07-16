@@ -12,13 +12,22 @@
     <title>B4a admin</title>
 </head>
 
-<body>
-    <form action="/upload" method="post" enctype="multipart/form-data">
-        <input type="text" name="name" id="name">
-        <input type="file" name="book" id="book">
-        <button type="submit">Submit</button>
-    </form>
+<body class="bg-black text-white ">
 
+    <div class="flex items-center justify-center h-screen">
+        <form action="/upload" method="post" class=" py-12 rounded-3xl" enctype="multipart/form-data">
+            <input type="text" class="bg-gray-900 rounded-3xl placeholder-gray-300 px-12 py-4" placeholder="Book name"
+                name="name" id="book_name">
+            <input type="text" class="bg-gray-900 rounded-3xl placeholder-gray-300 px-12 py-4" placeholder="Book author"
+                name="author" id="book_author">
+            <label for="book_cover">Cover</label>
+            <input type="file" name="book_cover" id="book_cover">
+            <label for="book">Book</label>
+            <input type="file" name="book" id="book">
+            <button type="submit" class=" bg-green-400 py-4 px-12 rounded-3xl">Submit</button>
+        </form>
+
+    </div>
 </body>
 
 </html>

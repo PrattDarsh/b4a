@@ -54,32 +54,22 @@
             </form>
         </div>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-8 mt-4">
-            <form action="/sendBook" method="post">
-                <button>
-                    <div class="">
-                        <img src="https://imgv3.fotor.com/images/gallery/Childrens-Book-Covers.jpg" class="rounded-3xl"
-                            alt="">
-                        <p class="text-xl font-bold text-center mt-4">The little dog</p>
-                        <p class="text-gray-500 text-center">Sophie Mackintosh</p>
-                    </div>
-                </button>
-            </form>
+            <%for(var i=0;i< allBooks.length;i++){%>
+                <form action="/books/<%=allBooks[i].book_name%>" method="get">
+                    <button>
+                        <div class="">
+                            <img src="<%=allBooks[i].book_cover_address%>" class="rounded-3xl" alt="">
+                            <p class="text-xl font-bold text-center mt-4">
+                                <%=allBooks[i].book_name%>
+                            </p>
+                            <p class="text-gray-500 text-center">
+                                <%=allBooks[i].book_author%>
+                            </p>
+                        </div>
+                    </button>
+                </form>
 
-            <div class="">
-                <img src="https://imgv3.fotor.com/images/gallery/Childrens-Book-Covers.jpg" class="rounded-3xl" alt="">
-                <p class="text-xl font-bold text-center mt-4">The little dog</p>
-                <p class="text-gray-500 text-center">Sophie Mackintosh</p>
-            </div>
-
-            <div class="">
-                <% images.forEach((image)=>{ %>
-                    <img src="data:<%= image.image.contentType %>;base64,<%= image.image.data.toString('base64') %>" />
-
-                    <% }) %>
-
-                        <p class="text-xl font-bold text-center mt-4">The little dog</p>
-                        <p class="text-gray-500 text-center">Sophie Mackintosh</p>
-            </div>
+                <% } %>
 
         </div>
 
