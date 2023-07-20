@@ -18,12 +18,15 @@
         <form action="/upload" method="post" class=" py-12 rounded-3xl" enctype="multipart/form-data">
             <input type="text" class="bg-gray-900 rounded-3xl placeholder-gray-300 px-12 py-4" placeholder="Book name"
                 name="name" id="book_name">
+            <input type="text" class="bg-gray-900 rounded-3xl placeholder-gray-300 px-12 py-4" placeholder="Book cover"
+                name="cover" id="cover">
             <input type="text" class="bg-gray-900 rounded-3xl placeholder-gray-300 px-12 py-4" placeholder="Book author"
-                name="author" id="book_author">
-            <label for="book_cover">Cover</label>
-            <input type="file" name="book_cover" id="book_cover">
-            <label for="book">Book</label>
-            <input type="file" name="book" id="book">
+                name="author" id="author">
+            <input type="text" class="bg-gray-900 rounded-3xl placeholder-gray-300 px-12 py-4" placeholder="Age"
+                name="age" id="age">
+
+            <label for="pages">Select pages: </label>
+            <input type="file" id="pages" name="pages" multiple>
             <button type="submit" class=" bg-green-400 py-4 px-12 rounded-3xl">Submit</button>
         </form>
 

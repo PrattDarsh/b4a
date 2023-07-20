@@ -14,10 +14,75 @@
     </title>
 </head>
 
-<body class=" ">
+<body class="bg-black " style="font-family: 'Poppins', sans-serif;">
 
-    <iframe src="<%=book_address%>" class="h-screen w-screen p-4 overflow-x-scroll overflow-y-hidden"
-        style="border-radius: 48px;" frameborder="0"></iframe>
+    <div class="relative flex items-center justify-center pics">
+        <p class="text-white absolute top-12 text-2xl">the end</p>
+        <% for (let i=pages.length-1; i>0; i--) { %>
+            <img class="absolute top-0  h-screen " id="<%=i%>"
+                src="data:<%= pages[i].page.contentType %>;base64,<%= pages[i].page.data.toString('base64') %>">
+            <% } %>
+    </div>
+    <div class="absolute top-0 -right-2 md:right-0 px-6 ">
+        <button onclick="history.back()"> <svg class="landscape:h-6  h-8  m-2 fill-current text-white "
+                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path
+                    d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm4.597 17.954l-4.591-4.55-4.555 4.596-1.405-1.405 4.547-4.592-4.593-4.552 1.405-1.405 4.588 4.543 4.545-4.589 1.416 1.403-4.546 4.587 4.592 4.548-1.403 1.416z" />
+            </svg> </button>
+        <form action="/likes" method="post">
+            <input type="hidden" name="book_name" value="<%=book_name%>">
+            <button type="submit">
+                <svg xmlns="http://www.w3.org/2000/svg" class="fill-current h-8   mx-2 text-white" viewBox="0 0 24 24">
+                    <path
+                        d="M12 9.229c.234-1.12 1.547-6.229 5.382-6.229 2.22 0 4.618 1.551 4.618 5.003 0 3.907-3.627 8.47-10 12.629-6.373-4.159-10-8.722-10-12.629 0-3.484 2.369-5.005 4.577-5.005 3.923 0 5.145 5.126 5.423 6.231zm-12-1.226c0 4.068 3.06 9.481 12 14.997 8.94-5.516 12-10.929 12-14.997 0-7.962-9.648-9.028-12-3.737-2.338-5.262-12-4.27-12 3.737z" />
+                </svg>
+            </button>
+            <p class="text-white mx-2 px-2">
+                <%=book_likes%>
+            </p>
+        </form>
+    </div>
+
+    <button
+        class=" text-gray-600 hover:text-green-500 transition delay-45 absolute left-0 px-6  top-1/2 text-xl md:text-6xl"
+        onclick="turnPageBack()"><svg
+            class="h-10 fill-current text-gray-500 hover:text-green-500 rounded-r-full transform rotate-180"
+            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path
+                d="M8.094 2.814l9.092 9.186-9.092 9.186-1.244-1.207 7.979-7.979-7.979-7.979 1.244-1.207zm.028-2.814l-4.122 4 8 8-8 8 4.122 4 11.878-12-11.878-12z" />
+        </svg></button>
+    <button
+        class="text-gray-600 hover:text-green-500 transition delay-45 absolute right-0 px-6  top-1/2 text-xl md:text-6xl"
+        onclick="turnPage()"><svg class="h-10 fill-current text-gray-500 hover:text-green-500 rounded-r-full"
+            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path
+                d="M8.094 2.814l9.092 9.186-9.092 9.186-1.244-1.207 7.979-7.979-7.979-7.979 1.244-1.207zm.028-2.814l-4.122 4 8 8-8 8 4.122 4 11.878-12-11.878-12z" />
+        </svg></button>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.7.1/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.7.1/ScrollTrigger.min.js"></script>
+
+    <script>
+        var j = 0
+        function turnPage() {
+            j++
+            document.getElementById(j).classList.toggle('hidden')
+
+        }
+
+        function turnPageBack() {
+
+            document.getElementById(j).classList.toggle('hidden')
+            j--
+
+        }
+
+        gsap.from('.prev', { y: -200, opacity: 0, stagger: 0.1, duration: 1 })
+        gsap.from('.next', { y: 200, opacity: 0, stagger: 0.1, duration: 1 })
+        gsap.from('.pics', { y: -20, scale: 0, rotate: 15 }, '-=1')
+    </script>
+
 </body>
 
 </html>

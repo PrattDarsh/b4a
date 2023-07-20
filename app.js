@@ -22,27 +22,23 @@ mongoose.connect(
 
 const bookSchema = new mongoose.Schema({
   book_name: String,
-  book_author: String,
-  book_cover_address: String,
-  book_address: String,
+  cover: String,
+  author: String,
+  age: String,
+  likes: Number,
+  pages: [
+    {
+      page: {
+        data: Buffer,
+        contentType: String,
+      },
+    },
+  ],
 });
 
 const Book = new mongoose.model("Book", bookSchema);
 
-// const storage = multer.memoryStorage()
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    if (file.fieldname === "book_cover") {
-      cb(null, "./public/book_covers");
-    }
-    if (file.fieldname === "book") {
-      cb(null, "./public/books");
-    }
-  },
-  filename: function (req, file, cb) {
-    return cb(null, `${file.originalname}`);
-  },
-});
+const storage = multer.memoryStorage();
 
 // const upload = multer({ storage: storage });
 const upload = multer({ storage });
@@ -51,26 +47,26 @@ app.get("/admin", (req, res) => {
   res.render("admin");
 });
 
-app.post(
-  "/upload",
-  upload.fields([
-    { name: "book_cover", maxCount: 1 },
-    { name: "book", maxCount: 1 },
-  ]),
-  (req, res) => {
-    const books = new Book({
-      book_name: req.body.name,
-      book_author: req.body.author,
-      book_cover_address: "./book_covers/" + req.body.name + ".png",
-      book_address: req.body.name + ".pdf",
-    });
+app.post("/upload", upload.array("pages"), async (req, res) => {
+  const books = new Book({
+    book_name: req.body.name,
+    cover: req.body.cover,
+    author: req.body.author,
+    age: req.body.age,
+    likes: 0,
+    pages: req.files.map((file) => ({
+      page: {
+        data: file.buffer,
+        contentType: file.mimetype,
+      },
+    })),
+  });
 
-    books.save();
-    return res.redirect("/");
+  books.save();
+  return res.redirect("/");
 
-    // res.send("done");
-  }
-);
+  // res.send("done");
+});
 
 app.get("/", (req, res) => {
   Book.find({}).then((allBooks) => {
@@ -85,9 +81,26 @@ app.get("/books/:book_name", (req, res) => {
   Book.findOne({ book_name: req.params.book_name }).then((foundBook) => {
     res.render("book", {
       book_name: foundBook.book_name,
-      book_address: foundBook.book_address,
+      pages: foundBook.pages,
+      book_likes: foundBook.likes,
     });
   });
+});
+
+app.post("/likes", (req, res) => {
+  var book = Book.findOne({ book_name: req.body.book_name }).then(
+    (foundBook) => {
+      Book.findOneAndUpdate(
+        { book_name: req.body.book_name },
+        { $inc: book.likes + 1 }
+      );
+      res.render("book", {
+        book_name: foundBook.book_name,
+        pages: foundBook.pages,
+        book_likes: foundBook.likes,
+      });
+    }
+  );
 });
 
 app.listen(process.env.PORT || 3000, (req, res) => {
