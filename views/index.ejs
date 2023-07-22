@@ -101,7 +101,14 @@
                         class=" px-8 py-8 transition duration-100 ease-in-out transform hover:-translate-y-1 hover:scale-105"
                         action="/books/<%=allBooks[i].book_name%>" method="get">
                         <button class="w-full">
-                            <img src="<%=allBooks[i].cover%>" class="rounded-xl" alt="">
+
+                            <div class="relative">
+                                <img src="<%=allBooks[i].cover%>" class="rounded-xl " alt="">
+                                <div class="absolute top-2 right-2 bg-gray-900 opacity-75 rounded-xl px-2 py-1">
+                                    <%=allBooks[i].likes%> <span>likes</span>
+
+                                </div>
+                            </div>
                             <div class="mt-4 flex justify-between items-center">
                                 <div class="">
                                     <p class="text-left text-2xl font-bold text-green-500">

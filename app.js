@@ -88,19 +88,11 @@ app.get("/books/:book_name", (req, res) => {
 });
 
 app.post("/likes", (req, res) => {
-  var book = Book.findOne({ book_name: req.body.book_name }).then(
-    (foundBook) => {
-      Book.findOneAndUpdate(
-        { book_name: req.body.book_name },
-        { $inc: book.likes + 1 }
-      );
-      res.render("book", {
-        book_name: foundBook.book_name,
-        pages: foundBook.pages,
-        book_likes: foundBook.likes,
-      });
-    }
-  );
+  Book.updateOne(
+    { book_name: req.body.book_name },
+    { $inc: { likes: 1 } }
+  ).exec();
+  res.redirect("/books/" + req.body.book_name);
 });
 
 app.listen(process.env.PORT || 3000, (req, res) => {
