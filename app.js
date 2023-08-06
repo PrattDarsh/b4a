@@ -24,6 +24,7 @@ const bookSchema = new mongoose.Schema({
   book_name: String,
   cover: String,
   author: String,
+  desc: String,
   age: String,
   likes: Number,
   pages: [
